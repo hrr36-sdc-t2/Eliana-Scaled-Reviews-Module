@@ -89,7 +89,7 @@ class App extends React.Component {
   }
 
   render() {
-    const reviews = this.state;
+    const reviews = this.state.reviews;
     const ratings = this.calculateUserRatings(reviews);
 
     return (
