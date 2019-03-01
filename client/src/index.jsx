@@ -89,11 +89,11 @@ class App extends React.Component {
   }
 
   render() {
-    const reviews = this.state.reviews;
+    const { reviews } = this.state;
     const ratings = this.calculateUserRatings(reviews);
 
     return (
-      <Container className='ReviewsContainer'>
+      <Container className="ReviewsContainer">
         <Row>
           <ReviewCount
             reviewLength={reviews.length}
@@ -103,7 +103,7 @@ class App extends React.Component {
         <Row>
           <ConditionsRatings ratings={ratings} reviews={reviews} />
         </Row>
-        <Row className='bottom-spacing top-spacing btn-toolbar'>
+        <Row className="bottom-spacing top-spacing btn-toolbar">
           <SearchReviews handleSearchInput={this.queryReviewListings} />
           <DropDownSearch handleValueChange={this.customReviewListings} />
         </Row>
