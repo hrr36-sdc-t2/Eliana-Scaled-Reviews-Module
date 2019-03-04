@@ -1,6 +1,6 @@
 const faker = require("faker");
 
-const TOTAL_ENTRIES = 10000000;
+const TOTAL_ENTRIES = 100000000;
 const CHUNK_SIZE = 5000;
 const TOTAL_CHUNKS = TOTAL_ENTRIES / CHUNK_SIZE;
 
