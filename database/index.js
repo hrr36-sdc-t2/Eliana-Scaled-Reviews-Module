@@ -1,31 +1,37 @@
-var config = require("../knexfile");
-var env = "development";
-var knex = require("knex")(config[env]);
+var config = require('../knexfile');
+var env = 'development';
+var knex = require('knex')(config[env]);
 
-const findMostRecent = function() {
-  console.log("accessing postgres db.....");
+const findMostRecent = function (listingId) {
+  console.log('accessing mariadb.....');
   return knex
-    .from("reviews")
-    .orderBy("created_at", "desc")
+    .from('review')
+    .innerJoin('customer', 'review.customer_id', 'customer.id')
+    .where('listing_id', listingId)
+    .orderBy('created_at', 'desc')
     .then(records => {
       return records;
     });
 };
 
-const findMostRelevant = function() {
-  console.log("accessing postgres db.....");
+const findMostRelevant = function (listingId) {
+  console.log('accessing mariadb.....');
   return knex
-    .from("reviews")
-    .orderBy("user_rating", "desc")
+    .from('review')
+    .innerJoin('customer', 'review.customer_id', 'customer.id')
+    .where('listing_id', listingId)
+    .orderBy('user_rating', 'desc')
     .then(records => {
       return records;
     });
 };
 
-const findFilteredReviews = function(query) {
+const findFilteredReviews = function (listingId, query) {
   return knex
-    .from("reviews")
-    .where("description", "like", `%${query}%`)
+    .from('review')
+    .innerJoin('customer', 'review.customer_id', 'customer.id')
+    .where('listing_id', listingId)
+    .where('description', 'like', `%${query}%`)
     .then(records => {
       return records;
     });
