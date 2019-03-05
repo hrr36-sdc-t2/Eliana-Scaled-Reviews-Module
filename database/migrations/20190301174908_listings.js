@@ -23,7 +23,7 @@ exports.up = function (knex, Promise) {
       review.integer('check_in');
       review.integer('value');
 
-      review.index(['listing_id', 'created_at']);
+      // review.index(['listing_id', 'created_at']);
     })
   ]);
 };
