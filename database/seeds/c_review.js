@@ -58,9 +58,20 @@ var makeFakeReviews = function () {
 exports.seed = async function (knex, Promise) {
   return knex('review').del()
     .then(async function () {
+      var total_time_generator = 0;
+      var total_time_sql = 0;
       for (var i = 0; i < TOTAL_CHUNKS; i++) {
-        await knex('review').insert(makeFakeReviews());
+        var time_start_gen = new Date();
+        var temp = makeFakeReviews();
+        var time_end_gen = new Date();
+        total_time_generator += (time_end_gen - time_start_gen);
+        var time_start = new Date();
+        await knex('review').insert(temp);
+        var time_end = new Date();
+        total_time_sql += (time_end - time_start);
       }
+      console.log(total_time_generator, 'total_time_generator');
+      console.log(total_time_sql, 'total_time_sql');
       return Promise.resolve(true);
     })
 };
