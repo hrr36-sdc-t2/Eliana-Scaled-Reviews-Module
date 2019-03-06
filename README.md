@@ -18,7 +18,7 @@
 - Javascript, React 
 - React-Bootstrap
 - Node.js, Express
-- Postgres, Knex
+- MariaDB, Knex
 
 ## Usage
 
