@@ -1,7 +1,7 @@
 const faker = require("faker");
 
-const TOTAL_ENTRIES = 500000;
-const CHUNK_SIZE = 5000;
+const TOTAL_ENTRIES = 3000000;
+const CHUNK_SIZE = 1000;
 const TOTAL_CHUNKS = TOTAL_ENTRIES / CHUNK_SIZE;
 
 const createFakeCustomer = (id) => ({

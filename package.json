@@ -42,6 +42,7 @@
     "request": "^2.88.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "tiny-async-pool": "^1.0.4",
     "validator": "^10.11.0",
     "webpack-dev": "^1.1.1"
   },
