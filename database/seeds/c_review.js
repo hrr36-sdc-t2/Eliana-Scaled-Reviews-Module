@@ -45,7 +45,7 @@ const createFakeReview = () => ({
   //1K customers
   customer_id: faker.random.number({
     min: 1,
-    max: 500000
+    max: 3000000
   })
 });
 
@@ -99,10 +99,6 @@ var makeFakeReviews = function (offset) {
   return fakeReviews;
 };
 
-// var chunkMaker = 
-// }
-// const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
-
 exports.seed = async function (knex, Promise) {
   return knex('review').del()
     .then(async function () {
@@ -112,47 +108,14 @@ exports.seed = async function (knex, Promise) {
       for (var i = 0; i < TOTAL_CHUNKS; i++) {
         dummy.push(null);
       }
-
       const results = await asyncPool(CONCURRENCY, dummy, function () {
-        // return new Promise(function (resolve) {
         var time_start_gen = new Date();
         var temp = makeFakeReviews();
         var time_end_gen = new Date();
         total_time_generator += time_end_gen - time_start_gen;
         return knex('review').insert(temp);
-        // });
       });
-      // await Promise.all([
-      //   function () {
-      //     var temp = makeFakeReviews(i * CHUNK_SIZE);
-      //     return knex('review').insert(temp);
-      //   }(),
-      //   function () {
-      //     var temp = makeFakeReviews((i + 1) * CHUNK_SIZE);
-      //     return knex('review').insert(temp);
-      //   }(),
-      //   function () {
-      //     var temp = makeFakeReviews((i + 1) * CHUNK_SIZE);
-      //     return knex('review').insert(temp);
-      //   }(),
-      //   function () {
-      //     var temp = makeFakeReviews((i + 1) * CHUNK_SIZE);
-      //     return knex('review').insert(temp);
-      //   }()
-      // ]);
-      // var time_start_gen = new Date();
-      // var temp = makeFakeReviews();
-      // var time_end_gen = new Date();
-      // total_time_generator += (time_end_gen - time_start_gen);
-      // var time_start = new Date();
-
-      // await knex('review').insert(temp);
-      // await knex.batchInsert('review', temp, CHUNK_SIZE)
-      // var time_end = new Date();
-      // total_time_sql += (time_end - time_start);
-      // }
       console.log(total_time_generator, 'total_time_generator');
-      // console.log(total_time_sql, 'total_time_sql');
       return Promise.resolve(true);
     })
 };
