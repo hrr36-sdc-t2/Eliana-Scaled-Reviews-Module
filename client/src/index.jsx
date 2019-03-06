@@ -30,9 +30,18 @@ class App extends React.Component {
     this.setState({ reviews: data });
   }
 
+
+
   async grabReviews() {
+    var getRandomInt = function (min, max) {
+      var min = Math.ceil(min);
+      var max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    var randomListing = getRandomInt(0, 10000000);
+    console.log(randomListing);
     try {
-      const response = await axios.get('/rooms/reviews/recent');
+      const response = await axios.get('/rooms/reviews/recent/' + randomListing);
       this.setupReviews(response.data);
     } catch (error) {
       console.error(error);
@@ -45,9 +54,9 @@ class App extends React.Component {
     }
   }
 
-  async queryReviewListings(query) {
+  async queryReviewListings(query, listing_id) {
     axios
-      .get('/rooms/reviews/filter', { params: { data: query } })
+      .get('/rooms/reviews/filter', { params: { data: query, listing_id: listing_id } })
       .then(res => this.filterReviews(res.data));
   }
 
