@@ -10,18 +10,18 @@ exports.up = function (knex, Promise) {
       customer.string('avatar_url', 512);
     }),
     knex.schema.createTable('review', function (review) {
-      review.increments('id').primary();
-      review.integer('customer_id');
-      review.integer('listing_id');
-      review.timestamp('created_at');
-      review.string('description', 1000);
-      review.integer('customer_rating');
-      review.integer('accuracy');
-      review.integer('communication');
-      review.integer('cleanliness');
-      review.integer('location');
-      review.integer('check_in');
-      review.integer('value');
+      review.increments('id').primary().notNull();
+      review.integer('customer_id').notNull();
+      review.integer('listing_id').notNull();
+      review.timestamp('created_at').notNull();
+      review.string('description', 1000).notNull();
+      review.integer('customer_rating').notNull();
+      review.integer('accuracy').notNull();
+      review.integer('communication').notNull();
+      review.integer('cleanliness').notNull();
+      review.integer('location').notNull();
+      review.integer('check_in').notNull();
+      review.integer('value').notNull();
 
       // review.index(['listing_id', 'created_at']);
     })
