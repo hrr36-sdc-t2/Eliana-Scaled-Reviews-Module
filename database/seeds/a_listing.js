@@ -1,5 +1,5 @@
 const TOTAL_ENTRIES = 10000000;
-const CHUNK_SIZE = 5000;
+const CHUNK_SIZE = 1000;
 const TOTAL_CHUNKS = TOTAL_ENTRIES / CHUNK_SIZE;
 
 var makeFakeListings = function (offset) {
