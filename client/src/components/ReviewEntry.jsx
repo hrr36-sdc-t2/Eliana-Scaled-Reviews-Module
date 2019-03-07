@@ -36,13 +36,13 @@ class ReviewEntry extends React.Component {
         <Row className="description-spacing">
           <Col className="images" lg={3} sm={3} xs={3} xl={3}>
             <Image
-              src={this.props.review.image_url}
+              src={this.props.review.avatar_url}
               className="thumbnail"
               roundedCircle
             />
           </Col>
           <Col lg={6} sm={8} xs={8} xl={6}>
-            <Row className="username">{this.props.review.username}</Row>
+            <Row className="username">{this.props.review.name}</Row>
             <Row>
               {moment(this.props.review.created_at)
                 .startOf("day")
