@@ -20,7 +20,7 @@ const findMostRelevant = function (listingId) {
     .from('review')
     .innerJoin('customer', 'review.customer_id', 'customer.id')
     .where('listing_id', listingId)
-    .orderBy('user_rating', 'desc')
+    .orderBy('customer_rating', 'desc')
     .then(records => {
       return records;
     });

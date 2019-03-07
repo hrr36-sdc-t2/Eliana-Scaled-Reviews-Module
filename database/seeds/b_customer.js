@@ -8,6 +8,10 @@ const createFakeCustomer = (id) => ({
   id: id,
   name: faker.name.firstName(),
   avatar_url: faker.image.avatar(),
+  customer_rating: faker.random.number({
+    min: 0,
+    max: 100
+  }),
 });
 
 var makeFakeCustomers = function (offset) {

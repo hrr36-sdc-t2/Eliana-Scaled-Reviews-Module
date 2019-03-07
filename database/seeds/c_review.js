@@ -9,10 +9,6 @@ const TOTAL_CHUNKS = TOTAL_ENTRIES / CHUNK_SIZE;
 const createFakeReview = () => ({
   created_at: faker.date.past(),
   description: faker.lorem.sentences(),
-  customer_rating: faker.random.number({
-    min: 0,
-    max: 100
-  }),
   accuracy: faker.random.number({
     min: 3,
     max: 5
@@ -56,10 +52,6 @@ var makeFakeReviews = function (offset) {
       // id: offset + i,
       created_at: faker.date.past(),
       description: faker.lorem.sentences(),
-      customer_rating: faker.random.number({
-        min: 0,
-        max: 100
-      }),
       accuracy: faker.random.number({
         min: 3,
         max: 5
