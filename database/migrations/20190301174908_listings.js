@@ -5,9 +5,10 @@ exports.up = function (knex, Promise) {
       listing.increments('id').primary();
     }),
     knex.schema.createTable('customer', function (customer) {
-      customer.increments('id').primary();
-      customer.string('name', 20);
-      customer.string('avatar_url', 512);
+      customer.increments('id').primary().notNull();
+      customer.string('name', 20).notNull();
+      customer.string('avatar_url', 512).notNull();
+      customer.integer('customer_rating').notNull();
     }),
     knex.schema.createTable('review', function (review) {
       review.increments('id').primary().notNull();
@@ -15,7 +16,6 @@ exports.up = function (knex, Promise) {
       review.integer('listing_id').notNull();
       review.timestamp('created_at').notNull();
       review.string('description', 1000).notNull();
-      review.integer('customer_rating').notNull();
       review.integer('accuracy').notNull();
       review.integer('communication').notNull();
       review.integer('cleanliness').notNull();
