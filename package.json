@@ -18,9 +18,8 @@
     "sass": "sass --watch client/src/stylesheets/style.scss:client/dist/stylesheets/style.css"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0",
     "@babel/polyfill": "^7.2.5",
-    "@babel/runtime": "^7.3.1",
+    "@babel/runtime": "^7.3.4",
     "axios": "^0.18.0",
     "body-parser": "latest",
     "cors": "^2.8.5",
@@ -47,14 +46,12 @@
     "webpack-dev": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
-    "babel-loader": "^8.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.5",
