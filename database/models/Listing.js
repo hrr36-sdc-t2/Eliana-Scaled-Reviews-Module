@@ -17,7 +17,7 @@ const reviewSchema = new Schema({
 
 const listingSchema = new Schema({
   _id: { type: Number, required: true },
-  reviews: [reviewSchema],
+  review: [reviewSchema],
 }, { id: false });
 
 const Listing = mongoose.model('Listing', listingSchema);
