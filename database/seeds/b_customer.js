@@ -32,3 +32,4 @@ exports.seed = async function (knex, Promise) {
       return Promise.resolve(true);
     })
 };
+
