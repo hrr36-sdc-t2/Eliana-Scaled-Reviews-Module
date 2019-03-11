@@ -22,7 +22,7 @@ exports.up = function (knex, Promise) {
       review.integer('location').notNull();
       review.integer('check_in').notNull();
       review.integer('value').notNull();
-      // review.index(['listing_id', 'created_at']); //create indexes after tables are seeded
+      // review.index(['listing_id', 'created_at']); //create indexes after tables are seeded: CREATE INDEX idx_listing_id_created_at ON review (listing_id, created_at)
     })
   ]);
 };
