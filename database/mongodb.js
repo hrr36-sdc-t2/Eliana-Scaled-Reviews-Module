@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Listing = require('./models/Listing.js').Listing;
 
 // CREATE CONNECTION
 // Build the connection string 
@@ -29,19 +30,53 @@ process.on('SIGINT', function () {
   });
 });
 
-module.exports.dbConnect = dbConnect;
+//MONGOOSE QUERIES
+const findMostRecent = function (listingId) {
+//mongoose find by listing_id and sort by review date
+  console.log(listingId, 'this is lisitngid');
+  return Listing.aggregate([
+    {$match: {
+      _id: listingId
+    }},
+    {$unwind: "$review"},
+    {$sort: {
+      'review.created_at': -1
+    }},
+    {$lookup: {
+      from: 'customers',
+      localField: 'review.customer_id',
+      foreignField: '_id',
+      as: 'customerArray'
+    }}
+  ]).exec();
+};
 
+const findMostRelevant = function (listingId) {
+//mongoose find by listing_id and sort by customer_rating 
+  return Listing.aggregate([
+    {$match: {
+      _id: listingId
+    }},
+    {$unwind: "$review"},
+    {$lookup: {
+      from: 'customers',
+      localField: 'review.customer_id',
+      foreignField: '_id',
+      as: 'customerArray'
+    }},
+    {$unwind: '$customerArray'},
+    {$sort: {
+      'customerArray.customer_rating': -1,
+    }}
+  ]).exec(); 
+};
 
-
-// exports.findRecent = function (listingId) {
-//   //mongodb find and sort function
-// };
-
-// exports.findRelevant = function (listingId) {
-//   //mongodb find and sort by customer_rating function
-// };
+module.exports = { 
+  dbConnect: dbConnect,
+  findMostRecent: findMostRecent,
+  findMostRelevant: findMostRelevant 
+}
 
 // exports.findFiltered = function (listingId, query) {
 //   //mongodb find and filter function
 // };
-
