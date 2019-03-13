@@ -1,3 +1,4 @@
+const nr = require('newrelic');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -6,32 +7,41 @@ const {
   findMostRecent,
   findMostRelevant,
   findFilteredReviews
-} = require('../database/index.js');
+} = require('../database/mongodb.js');
+const mongodb = require('../database/mongodb.js');
 
-// for migrating and seeding db
-var config = require('../knexfile.js');
-var env = 'development';
-var knex = require('knex')(config[env]);
-
-const port = process.env.PORT || 3000;
+mongodb.dbConnect();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
 
+
 app.get('/rooms/reviews/recent/:listing_id', function (req, res) {
   console.log('Inside server for get request');
 
-  findMostRecent(req.params.listing_id).then(records => {
+  findMostRecent(parseInt(req.params.listing_id, 10))
+  .then(async(records) => {
     console.log('retrieved recent reviews from DB!!!');
-    return res.status(200).send(records);
+    var cleanedRecords = await records.map((obj) =>  {
+      delete obj._id;
+      obj.review['name'] = obj.customerArray[0].name;
+      obj.review['avatar_url'] = obj.customerArray[0].avatar_url;
+      obj.review['customer_rating'] = obj.customerArray[0].customer_rating;
+      delete obj.customerArray;
+      return obj;
+      });
+      return cleanedRecords;
+    })
+  .then((cleanedRecords) => {
+    return res.status(200).send(cleanedRecords);
   });
 });
 
 app.get('/rooms/reviews/relevant/:listing_id', function (req, res) {
   console.log('Inside server for relevant get request');
-  findMostRelevant(req.params.listing_id).then(records => {
+  findMostRelevant(parseInt(req.params.listing_id, 10)).then(records => {
     console.log('retrieved relevant reviews from DB!!!');
     return res.status(200).send(records);
   });
@@ -44,5 +54,6 @@ app.get('/rooms/reviews/filter/:listing_id', function (req, res) {
   });
 });
 
+var port = 3000;
 app.listen(port);
 console.log('Listening on port', port);

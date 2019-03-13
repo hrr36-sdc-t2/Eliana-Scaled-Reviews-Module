@@ -8,7 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "db:reset": "knex migrate:latest",
     "db:seed": " knex seed:run",
     "test": "jest client/src/ __test__",
@@ -18,10 +18,10 @@
     "sass": "sass --watch client/src/stylesheets/style.scss:client/dist/stylesheets/style.css"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0",
     "@babel/polyfill": "^7.2.5",
-    "@babel/runtime": "^7.3.1",
+    "@babel/runtime": "^7.3.4",
     "axios": "^0.18.0",
+    "babel-loader": "^8.0.5",
     "body-parser": "latest",
     "cors": "^2.8.5",
     "css-loader": "^2.1.0",
@@ -33,7 +33,9 @@
     "moment": "^2.24.0",
     "mongoose": "^5.4.16",
     "mysql": "^2.16.0",
+    "newrelic": "^5.6.0",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.18.10",
     "pg": "latest",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
@@ -47,14 +49,13 @@
     "webpack-dev": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
-    "babel-loader": "^8.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.5",
