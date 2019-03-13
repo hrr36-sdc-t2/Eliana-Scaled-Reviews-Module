@@ -31,16 +31,16 @@ app.get('/rooms/reviews/relevant/:listing_id', function (req, res) {
   console.log('Inside server for relevant get request');
   findMostRelevant(parseInt(req.params.listing_id, 10)).then(records => {
     console.log('retrieved relevant reviews from DB!!!');
-    return res.status(200).send(records);
+    return res.status(200).json(records);
   });
 });
 
-app.get('/rooms/reviews/filter/:listing_id', function (req, res) {
-  console.log('on server side!!!');
-  findFilteredReviews(req.params.listing_id, req.query.data).then(records => {
-    return res.status(200).send(records);
-  });
-});
+// app.get('/rooms/reviews/filter/:listing_id', function (req, res) {
+//   console.log('on server side!!!');
+//   findFilteredReviews(req.params.listing_id, req.query.data).then(records => {
+//     return res.status(200).send(records);
+//   });
+// });
 
 var port = 3000;
 app.listen(port);

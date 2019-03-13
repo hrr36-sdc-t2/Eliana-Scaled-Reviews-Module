@@ -41,8 +41,6 @@ const formatReviews = function(reviews) {
   return cleanedRecords;
 }
 
-
-
 //MONGOOSE QUERIES
 const findMostRecent = function (listingId) {
 //mongoose find by listing_id and sort by review date
@@ -64,7 +62,7 @@ const findMostRecent = function (listingId) {
   ]).exec()
   .then((records) => {
     return formatReviews(records);
-  })
+  });
 };
 
 const findMostRelevant = function (listingId) {
@@ -84,7 +82,10 @@ const findMostRelevant = function (listingId) {
     {$sort: {
       'customerArray.customer_rating': -1,
     }}
-  ]).exec(); 
+  ]).exec()
+  .then((records) => {
+    return formatReviews(records);
+  });
 };
 
 module.exports = { 
