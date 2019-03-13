@@ -30,6 +30,19 @@ process.on('SIGINT', function () {
   });
 });
 
+const formatReviews = function(reviews) {
+  var cleanedRecords = reviews.map((obj) =>  {
+    obj.review['name'] = obj.customerArray[0].name;
+    obj.review['avatar_url'] = obj.customerArray[0].avatar_url;
+    obj.review['customer_rating'] = obj.customerArray[0].customer_rating;
+    obj.review['listing_id'] = obj._id;
+    return obj.review;
+  });
+  return cleanedRecords;
+}
+
+
+
 //MONGOOSE QUERIES
 const findMostRecent = function (listingId) {
 //mongoose find by listing_id and sort by review date
@@ -48,7 +61,10 @@ const findMostRecent = function (listingId) {
       foreignField: '_id',
       as: 'customerArray'
     }}
-  ]).exec();
+  ]).exec()
+  .then((records) => {
+    return formatReviews(records);
+  })
 };
 
 const findMostRelevant = function (listingId) {

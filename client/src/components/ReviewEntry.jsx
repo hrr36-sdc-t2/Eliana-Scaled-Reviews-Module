@@ -36,15 +36,15 @@ class ReviewEntry extends React.Component {
         <Row className="description-spacing">
           <Col className="images" lg={3} sm={3} xs={3} xl={3}>
             <Image
-              src={this.props.review.review.avatar_url}
+              src={this.props.review.avatar_url}
               className="thumbnail"
               roundedCircle
             />
           </Col>
           <Col lg={6} sm={8} xs={8} xl={6}>
-            <Row className="username">{this.props.review.review.name}</Row>
+            <Row className="username">{this.props.review.name}</Row>
             <Row>
-              {moment(this.props.review.review.created_at)
+              {moment(this.props.review.created_at)
                 .startOf("day")
                 .fromNow()}
             </Row>
@@ -52,10 +52,10 @@ class ReviewEntry extends React.Component {
         </Row>
         <Row className="desciption-align">
           <Col lg={12} sm={12} xs={12} xl={12}>
-            {this.props.review.review.description.slice(0, 111)}
-            {this.state.expanded && this.props.review.review.description.slice(111)}
+            {this.props.review.description.slice(0, 111)}
+            {this.state.expanded && this.props.review.description.slice(111)}
             {!this.state.expanded &&
-              this.props.review.review.description.length > 111 && (
+              this.props.review.description.length > 111 && (
                 <span>
                   {this.state.dots}
                   <button onClick={this.expandText} className="read-btn">

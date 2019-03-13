@@ -55,19 +55,19 @@ class App extends React.Component {
     }
   }
 
-  async queryReviewListings(query, listing_id) {
+  async queryReviewListings(query) {
     axios
       .get('/rooms/reviews/filter', { params: { data: query, listing_id: listing_id } })
       .then(res => this.filterReviews(res.data));
   }
 
-  async customReviewListings(query) {
+  async customReviewListings(query, listing_id) {
     axios
-      .get(`/rooms/reviews/${query}`)
+      .get(`/rooms/reviews/${query}` + listing_id)
       .then(res => this.filterReviews(res.data));
   }
 
-  calculateUserRatings(users) {
+  calculateUserRatings(reviews) {
     let totalAverage = 0;
     const ratings = {
       accuracy: 0,
@@ -78,17 +78,17 @@ class App extends React.Component {
       value: 0,
     };
     // grab specific condtions rating from each user
-    for (let i = 0; i < users.length; i += 1) {
-      ratings.accuracy += users[i].review.accuracy;
-      ratings.communication += users[i].review.communication;
-      ratings.cleanliness += users[i].review.cleanliness;
-      ratings.location += users[i].review.location;
-      ratings.check_in += users[i].review.check_in;
-      ratings.value += users[i].review.value;
+    for (let i = 0; i < reviews.length; i += 1) {
+      ratings.accuracy += reviews[i].accuracy;
+      ratings.communication += reviews[i].communication;
+      ratings.cleanliness += reviews[i].cleanliness;
+      ratings.location += reviews[i].location;
+      ratings.check_in += reviews[i].check_in;
+      ratings.value += reviews[i].value;
     }
     for (const key in ratings) {
       // find the average rating from the users
-      ratings[key] = Math.ceil(ratings[key] / users.length);
+      ratings[key] = Math.ceil(ratings[key] / reviews.length);
       totalAverage += ratings[key];
     }
     ratings.totalAverage = Math.ceil(totalAverage / 6);
