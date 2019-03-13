@@ -38,10 +38,11 @@ class App extends React.Component {
       var max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    var randomListing = getRandomInt(0, 10000000);
+    var randomListing = getRandomInt(1, 10000000);
     console.log(randomListing);
     try {
       const response = await axios.get('/rooms/reviews/recent/' + randomListing);
+      console.log(response.data, 'this is the response from server');
       this.setupReviews(response.data);
     } catch (error) {
       console.error(error);
@@ -78,12 +79,12 @@ class App extends React.Component {
     };
     // grab specific condtions rating from each user
     for (let i = 0; i < users.length; i += 1) {
-      ratings.accuracy += users[i].accuracy;
-      ratings.communication += users[i].communication;
-      ratings.cleanliness += users[i].cleanliness;
-      ratings.location += users[i].location;
-      ratings.check_in += users[i].check_in;
-      ratings.value += users[i].value;
+      ratings.accuracy += users[i].review.accuracy;
+      ratings.communication += users[i].review.communication;
+      ratings.cleanliness += users[i].review.cleanliness;
+      ratings.location += users[i].review.location;
+      ratings.check_in += users[i].review.check_in;
+      ratings.value += users[i].review.value;
     }
     for (const key in ratings) {
       // find the average rating from the users
