@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { HashRouter as Router, Route, Link } from "react-router-dom";
-
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -25,25 +23,31 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.grabReviews();
+    console.log(window.location.hash);
+    var listing_id;
+    if (window.location.hash) {
+      listing_id = parseInt(window.location.hash.substring(1));
+    }
+    if (!listing_id) {
+      listing_id = this.getRandomInt(1, 10000000);
+    }
+    this.grabReviews(listing_id);
   }
 
   setupReviews(data) {
     this.setState({ reviews: data });
   }
 
+  getRandomInt(min, max) {
+    var min = Math.ceil(min);
+    var max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-
-  async grabReviews() {
-    var getRandomInt = function (min, max) {
-      var min = Math.ceil(min);
-      var max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    var randomListing = getRandomInt(1, 10000000);
-    console.log(randomListing);
+  async grabReviews(listing_id) {
+    console.log(listing_id);
     try {
-      const response = await axios.get('/rooms/reviews/recent/' + randomListing);
+      const response = await axios.get('/rooms/reviews/recent/' + listing_id);
       console.log(response.data, 'this is the response from server');
       this.setupReviews(response.data);
     } catch (error) {
@@ -105,28 +109,24 @@ class App extends React.Component {
     const ratings = this.calculateUserRatings(reviews);
 
     return (
-      <Router>
-        <Route path="/:listing_id" render={(props) => 
-          <Container className="ReviewsContainer">
-            <Row>
-              <ReviewCount
-                reviewLength={reviews.length}
-                average={ratings.totalAverage}
-              />
-            </Row>
-            <Row>
-              <ConditionsRatings ratings={ratings} reviews={reviews} />
-            </Row>
-            <Row className="bottom-spacing top-spacing btn-toolbar">
-              <SearchReviews handleSearchInput={this.queryReviewListings} />
-              <DropDownSearch handleValueChange={this.customReviewListings} />
-            </Row>
-            <Row>
-              <ReviewList reviews={reviews} />
-            </Row>
-          </Container>
-        }/>
-      </Router>
+      <Container className="ReviewsContainer">
+        <Row>
+          <ReviewCount
+            reviewLength={reviews.length}
+            average={ratings.totalAverage}
+          />
+        </Row>
+        <Row>
+          <ConditionsRatings ratings={ratings} reviews={reviews} />
+        </Row>
+        <Row className="bottom-spacing top-spacing btn-toolbar">
+          <SearchReviews handleSearchInput={this.queryReviewListings} />
+          <DropDownSearch handleValueChange={this.customReviewListings} />
+        </Row>
+        <Row>
+          <ReviewList reviews={reviews} />
+        </Row>
+      </Container>
     );
   }
 }
