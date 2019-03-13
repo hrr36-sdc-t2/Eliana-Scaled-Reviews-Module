@@ -20,6 +20,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.4",
+    "artillery": "^1.6.0-27",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
     "body-parser": "latest",
