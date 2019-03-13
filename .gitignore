@@ -4,3 +4,8 @@ coverage
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+# client/dist*
+newrelic.js
+newrelic_agent.log
+.vscode*
+.DS_Store
