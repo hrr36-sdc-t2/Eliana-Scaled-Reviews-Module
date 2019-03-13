@@ -23,7 +23,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(window.location.hash);
     var listing_id;
     if (window.location.hash) {
       listing_id = parseInt(window.location.hash.substring(1));
@@ -45,7 +44,7 @@ class App extends React.Component {
   }
 
   async grabReviews(listing_id) {
-    console.log(listing_id);
+    console.log("fetching listing_id " + listing_id);
     try {
       const response = await axios.get('/rooms/reviews/recent/' + listing_id);
       console.log(response.data, 'this is the response from server');
