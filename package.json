@@ -9,8 +9,6 @@
   },
   "scripts": {
     "start": "nodemon server/index.js",
-    "db:reset": "knex migrate:latest",
-    "db:seed": " knex seed:run",
     "test": "jest client/src/ __test__",
     "test:coverage": "jest client/src/ __test__ --coverage",
     "dev:react": "webpack -d --watch",

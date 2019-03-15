@@ -1,6 +1,6 @@
 # Bearbnb
 
-> Recreation of Airbnb's Customer Reviews Module
+> Recreation of Airbnb's Customer Reviews Module (Scaled To Support 100M Records And 1000 qps)
 
 ## Related Projects
 
@@ -18,13 +18,12 @@
 - Javascript, React 
 - React-Bootstrap
 - Node.js, Express
-- MariaDB, Knex
+- MongoDB, Mongoose
 
 ## Usage
 
 1. Install project's dependencies.
 2. Open two CLI windows and run the commands npm run dev:react, and npm run start.
-3. Run tests: npm run test.
 
 ## Requirements
 
