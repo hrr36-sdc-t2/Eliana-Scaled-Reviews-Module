@@ -62,13 +62,13 @@ class App extends React.Component {
 
   async queryReviewListings(query) {
     axios
-      .get('/rooms/reviews/filter', { params: { data: query, listing_id: listing_id } })
+      .get('/rooms/reviews/filter', { params: { data: query } })
       .then(res => this.filterReviews(res.data));
   }
 
-  async customReviewListings(query, listing_id) {
+  async customReviewListings(query) {
     axios
-      .get(`/rooms/reviews/${query}` + listing_id)
+      .get(`/rooms/reviews/${query}` + this.state.review.listing_id)
       .then(res => this.filterReviews(res.data));
   }
 
