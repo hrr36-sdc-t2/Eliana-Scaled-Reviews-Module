@@ -1,6 +1,6 @@
 # Bearbnb
 
-> Recreation of Airbnb's Customer Reviews Module
+> Recreation of Airbnb's Customer Reviews Module (Scaled To Support 100M Records And 1000 qps)
 
 ## Related Projects
 
