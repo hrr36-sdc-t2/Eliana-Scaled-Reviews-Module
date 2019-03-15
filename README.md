@@ -18,13 +18,12 @@
 - Javascript, React 
 - React-Bootstrap
 - Node.js, Express
-- MariaDB, Knex
+- MongoDB, Mongoose
 
 ## Usage
 
 1. Install project's dependencies.
 2. Open two CLI windows and run the commands npm run dev:react, and npm run start.
-3. Run tests: npm run test.
 
 ## Requirements
 
