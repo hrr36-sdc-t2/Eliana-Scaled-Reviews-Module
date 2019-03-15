@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 const Schema = mongoose.Schema;
 const mongodb = require('../mongodb.js');
-const Customer = require('./models/Customer.js').Customer;
+const Customer = require('../models/Customer.js').Customer;
 
 // CONNECTION EVENTS
 // When successfully connected seed customers collection and close mongodb connection
