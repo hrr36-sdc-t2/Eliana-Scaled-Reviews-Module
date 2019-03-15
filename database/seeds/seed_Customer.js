@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
 const Schema = mongoose.Schema;
-const mongodb = require('./mongodb.js');
+const mongodb = require('../mongodb.js');
 const Customer = require('./models/Customer.js').Customer;
 
 // CONNECTION EVENTS

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
-const mongodb = require('./mongodb.js');
+const mongodb = require('../mongodb.js');
 const Listing = require('./models/Listing.js').Listing;
 const asyncPool = require('../util/async_pool_util.js');
 const createFakeReview = require('../util/seed_util.js');
