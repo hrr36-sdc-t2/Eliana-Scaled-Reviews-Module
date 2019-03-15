@@ -23,25 +23,30 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.grabReviews();
+    var listing_id;
+    if (window.location.hash) {
+      listing_id = parseInt(window.location.hash.substring(1));
+    }
+    if (!listing_id) {
+      listing_id = this.getRandomInt(1, 10000000);
+    }
+    this.grabReviews(listing_id);
   }
 
   setupReviews(data) {
     this.setState({ reviews: data });
   }
 
+  getRandomInt(min, max) {
+    var min = Math.ceil(min);
+    var max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-
-  async grabReviews() {
-    var getRandomInt = function (min, max) {
-      var min = Math.ceil(min);
-      var max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    var randomListing = getRandomInt(1, 10000000);
-    console.log(randomListing);
+  async grabReviews(listing_id) {
+    console.log("fetching listing_id " + listing_id);
     try {
-      const response = await axios.get('/rooms/reviews/recent/' + randomListing);
+      const response = await axios.get('/rooms/reviews/recent/' + listing_id);
       console.log(response.data, 'this is the response from server');
       this.setupReviews(response.data);
     } catch (error) {
@@ -55,19 +60,19 @@ class App extends React.Component {
     }
   }
 
-  async queryReviewListings(query, listing_id) {
+  async queryReviewListings(query) {
     axios
-      .get('/rooms/reviews/filter', { params: { data: query, listing_id: listing_id } })
+      .get('/rooms/reviews/filter', { params: { data: query } })
       .then(res => this.filterReviews(res.data));
   }
 
   async customReviewListings(query) {
     axios
-      .get(`/rooms/reviews/${query}`)
+      .get(`/rooms/reviews/${query}` + this.state.review.listing_id)
       .then(res => this.filterReviews(res.data));
   }
 
-  calculateUserRatings(users) {
+  calculateUserRatings(reviews) {
     let totalAverage = 0;
     const ratings = {
       accuracy: 0,
@@ -78,17 +83,17 @@ class App extends React.Component {
       value: 0,
     };
     // grab specific condtions rating from each user
-    for (let i = 0; i < users.length; i += 1) {
-      ratings.accuracy += users[i].review.accuracy;
-      ratings.communication += users[i].review.communication;
-      ratings.cleanliness += users[i].review.cleanliness;
-      ratings.location += users[i].review.location;
-      ratings.check_in += users[i].review.check_in;
-      ratings.value += users[i].review.value;
+    for (let i = 0; i < reviews.length; i += 1) {
+      ratings.accuracy += reviews[i].accuracy;
+      ratings.communication += reviews[i].communication;
+      ratings.cleanliness += reviews[i].cleanliness;
+      ratings.location += reviews[i].location;
+      ratings.check_in += reviews[i].check_in;
+      ratings.value += reviews[i].value;
     }
     for (const key in ratings) {
       // find the average rating from the users
-      ratings[key] = Math.ceil(ratings[key] / users.length);
+      ratings[key] = Math.ceil(ratings[key] / reviews.length);
       totalAverage += ratings[key];
     }
     ratings.totalAverage = Math.ceil(totalAverage / 6);

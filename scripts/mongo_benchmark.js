@@ -1,7 +1,7 @@
 const mongodb = require('../database/mongodb.js');
 const mongoose = require('mongoose');
 const Listing = require('../database/models/Listing.js').Listing;
-const createFakeReview = require('../database/seed_util.js');
+const createFakeReview = require('../database/util/seed_util.js');
 
 //on connection, do test read and post requests
 mongoose.connection.on('connected', async function () {

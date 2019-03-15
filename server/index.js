@@ -22,20 +22,8 @@ app.get('/rooms/reviews/recent/:listing_id', function (req, res) {
   console.log('Inside server for get request');
 
   findMostRecent(parseInt(req.params.listing_id, 10))
-  .then(async(records) => {
-    console.log('retrieved recent reviews from DB!!!');
-    var cleanedRecords = await records.map((obj) =>  {
-      delete obj._id;
-      obj.review['name'] = obj.customerArray[0].name;
-      obj.review['avatar_url'] = obj.customerArray[0].avatar_url;
-      obj.review['customer_rating'] = obj.customerArray[0].customer_rating;
-      delete obj.customerArray;
-      return obj;
-      });
-      return cleanedRecords;
-    })
-  .then((cleanedRecords) => {
-    return res.status(200).send(cleanedRecords);
+  .then((records) => {
+    return res.status(200).json(records);
   });
 });
 
@@ -43,16 +31,16 @@ app.get('/rooms/reviews/relevant/:listing_id', function (req, res) {
   console.log('Inside server for relevant get request');
   findMostRelevant(parseInt(req.params.listing_id, 10)).then(records => {
     console.log('retrieved relevant reviews from DB!!!');
-    return res.status(200).send(records);
+    return res.status(200).json(records);
   });
 });
 
-app.get('/rooms/reviews/filter/:listing_id', function (req, res) {
-  console.log('on server side!!!');
-  findFilteredReviews(req.params.listing_id, req.query.data).then(records => {
-    return res.status(200).send(records);
-  });
-});
+// app.get('/rooms/reviews/filter/:listing_id', function (req, res) {
+//   console.log('on server side!!!');
+//   findFilteredReviews(req.params.listing_id, req.query.data).then(records => {
+//     return res.status(200).send(records);
+//   });
+// });
 
 var port = 3000;
 app.listen(port);

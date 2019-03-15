@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 const mongodb = require('./mongodb.js');
 const Listing = require('./models/Listing.js').Listing;
-const asyncPool = require('./async_pool_util.js');
-const createFakeReview = require('./seed_util');
+const asyncPool = require('../util/async_pool_util.js');
+const createFakeReview = require('../util/seed_util.js');
 
 // CONNECTION EVENTS
 // When successfully connected seed customers collection and close mongodb connection
