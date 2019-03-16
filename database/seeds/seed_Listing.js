@@ -64,6 +64,7 @@ const seedListingsCollection = async function (callback) {
     var promise = Listing.collection.insertMany(data);
     var time_end_insert = new Date();
     total_time_insertion += time_end_insert - time_start_insert;
+    chunks_processed++;
     if (chunks_processed % Math.floor(TOTAL_CHUNKS/10) == 0) {
       console.log("" + (new Date()) + ": Processed " + chunks_processed + " / " + TOTAL_CHUNKS + " chunks");
     }
