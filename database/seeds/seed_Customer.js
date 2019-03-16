@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
-const Schema = mongoose.Schema;
+const asyncPool = require('../util/async_pool_util.js');
 const mongodb = require('../mongodb.js');
 const Customer = require('../models/Customer.js').Customer;
 
@@ -18,6 +18,7 @@ mongodb.dbConnect();
 const totalCustomers = 3000000;
 const chunkSize = 1000;
 const totalChunks = totalCustomers / chunkSize;
+const concurrency = 4;
 var counter = 1;
 
 //fake data generation using Customer model
@@ -44,16 +45,26 @@ const makeCustomerDocuments = function () {
 const seedCustomersCollection = async function (callback) {
   var total_time_generator = 0;
   var total_time_insertion = 0;
+  var chunks_processed = 0;
+  var dummy = [];
   for (var i = 0; i < totalChunks; i++) {
+    dummy.push(null);
+  }
+  const results = await asyncPool(concurrency, dummy, function () {
     var time_start_gen = new Date();
     let data = makeCustomerDocuments();
     var time_end_gen = new Date();
     total_time_generator += time_end_gen - time_start_gen;
     var time_start_insert = new Date();
-    await Customer.collection.insertMany(data);
+    var promise = Customer.collection.insertMany(data);
     var time_end_insert = new Date();
     total_time_insertion += time_end_insert - time_start_insert;
-  }
+    chunks_processed++;
+    if (chunks_processed % Math.floor(totalChunks/10) == 0) {
+      console.log("" + (new Date()) + ": Processed " + chunks_processed + " / " + totalChunks + " chunks");
+    }
+    return promise;
+  });
   console.log(total_time_generator, 'total_time_generator');
   console.log(total_time_insertion, 'total_time_insertion');
 }

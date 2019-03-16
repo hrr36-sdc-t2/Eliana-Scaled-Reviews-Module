@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const faker = require('faker');
 const mongodb = require('../mongodb.js');
 const Listing = require('../models/Listing.js').Listing;
 const asyncPool = require('../util/async_pool_util.js');
@@ -51,6 +50,7 @@ var makeListingDocuments = function () {
 const seedListingsCollection = async function (callback) {
   var total_time_generator = 0;
   var total_time_insertion = 0;
+  var chunks_processed = 0;
   var dummy = [];
   for (var i = 0; i < TOTAL_CHUNKS; i++) {
     dummy.push(null);
@@ -64,6 +64,9 @@ const seedListingsCollection = async function (callback) {
     var promise = Listing.collection.insertMany(data);
     var time_end_insert = new Date();
     total_time_insertion += time_end_insert - time_start_insert;
+    if (chunks_processed % Math.floor(TOTAL_CHUNKS/10) == 0) {
+      console.log("" + (new Date()) + ": Processed " + chunks_processed + " / " + totalChunks + " chunks");
+    }
     return promise;
   });
   console.log(total_time_generator, 'total_time_generator');
