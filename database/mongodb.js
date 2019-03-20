@@ -88,10 +88,19 @@ const findMostRelevant = function (listingId) {
   });
 };
 
+const addNewReview = function(listingId, reviewObj) {
+  return Listing.findById(listingId).exec()
+  .then((listing) => {
+    listing.review.push(reviewObj);
+    return listing.save();
+  });
+}
+
 module.exports = { 
   dbConnect: dbConnect,
   findMostRecent: findMostRecent,
-  findMostRelevant: findMostRelevant 
+  findMostRelevant: findMostRelevant, 
+  addNewReview: addNewReview
 }
 
 // exports.findFiltered = function (listingId, query) {
